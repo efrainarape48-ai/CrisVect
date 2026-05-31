@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crisvect — Impresión Creativa y Diseño Gráfico | Barquisimeto</title>
+  <meta name="description" content="Crisvect: impresiones, diseño gráfico, stickers, láminas escolares, maquetas, arreglos y publicidad digital en Barquisimeto, Venezuela." />
+  <meta name="keywords" content="impresión Barquisimeto, diseño gráfico Lara, stickers personalizados, láminas escolares, maquetas, logos Venezuela, publicidad digital" />
+  <meta property="og:title" content="Crisvect — Impresión Creativa y Diseño Gráfico" />
+  <meta property="og:description" content="Tu solución creativa completa en Barquisimeto. Impresiones, diseño, stickers, láminas, maquetas y más." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --brand:   #572CA6;
+      --accent:  #E52F6B;
+      --cyan:    #00AEEF;
+      --bg:      #FFFFFF;
+      --text:    #2D2D2D;
+      --muted:   #6B7280;
+      --surface: #F5F3FF;
+      --border:  #EDE9FE;
+      --radius:  14px;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --shadow: 0 4px 24px rgba(87,44,166,0.10);
+      --shadow-lg: 0 12px 48px rgba(87,44,166,0.16);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── UTILITIES ──────────────────────────────────────────── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .tag {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--brand);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 16px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 15px;
+      border-radius: 10px;
+      padding: 14px 28px;
+      cursor: pointer;
+      border: none;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(87,44,166,.32);
+    }
+    .btn-primary:hover { background: #4823a0; box-shadow: 0 10px 28px rgba(87,44,166,.42); }
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(229,47,107,.28);
+    }
+    .btn-accent:hover { background: #cc2560; box-shadow: 0 10px 28px rgba(229,47,107,.38); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+    .btn-ghost:hover { background: var(--surface); }
+
+    /* ─── NAVBAR ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 56px;
+      width: auto;
+      /* el logo tiene fondo negro: lo recortamos visualmente con mix-blend-mode */
+      mix-blend-mode: multiply;
+      /* fallback: border-radius para dar un poco de forma */
+      border-radius: 8px;
+    }
+    /* En el footer el fondo es oscuro, no usamos blend */
+    footer .logo img {
+      mix-blend-mode: normal;
+      height: 72px;
+    }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .18s;
+    }
+    .nav-links a:hover { color: var(--brand); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--brand);
+      border-radius: 2px;
+      transition: all .28s;
+    }
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      gap: 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 15px; font-weight: 500; color: var(--text);
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 68px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(87,44,166,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(229,47,107,.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 90% 10%, rgba(0,174,239,.05) 0%, transparent 70%);
+    }
+    /* decorative shapes */
+    .hero-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(48px);
+      opacity: .35;
+      pointer-events: none;
+    }
+    .hero-shape-1 { width: 480px; height: 480px; background: var(--brand); top: -100px; right: -80px; }
+    .hero-shape-2 { width: 300px; height: 300px; background: var(--accent); bottom: -80px; left: 60px; opacity: .18; }
+
+    .hero-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 80px 0 60px;
+    }
+    .hero-logo-wrap {
+      margin-bottom: 8px;
+    }
+    .hero-logo {
+      height: 120px;
+      width: auto;
+      mix-blend-mode: multiply;
+      /* compensate black bg: on white hero bg this blends cleanly */
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--brand);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 6px 16px; border-radius: 99px;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; }
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.03em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-trust {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 40px;
+    }
+    .hero-trust-text { font-size: 13px; color: var(--muted); }
+    .hero-trust-text strong { color: var(--text); }
+    .trust-dots { display: flex; gap: 4px; }
+    .trust-dots span { width: 8px; height: 8px; border-radius: 50%; }
+    .trust-dots span:nth-child(1) { background: var(--brand); }
+    .trust-dots span:nth-child(2) { background: var(--accent); }
+    .trust-dots span:nth-child(3) { background: var(--cyan); }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-card-main {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+    }
+    .hc-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hc-services {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .hc-service {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .hc-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .hc-icon.violet { background: rgba(87,44,166,.12); }
+    .hc-icon.pink   { background: rgba(229,47,107,.12); }
+    .hc-icon.cyan   { background: rgba(0,174,239,.12); }
+    .hc-service-name { font-weight: 600; font-size: 14px; }
+    .hc-service-sub  { font-size: 12px; color: var(--muted); }
+
+    /* floating badge */
+    .hero-badge {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: var(--accent);
+      color: white;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 8px 24px rgba(229,47,107,.4);
+      line-height: 1.3;
+    }
+
+    /* ─── SECTION BASE ────────────────────────────────────────── */
+    section { padding: 96px 0; }
+    .section-head { text-align: center; margin-bottom: 64px; }
+    h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    h2 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; margin: 0 auto; }
+
+    /* ─── SERVICES ──────────────────────────────────────────────*/
+    #servicios { background: var(--surface); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: transform .22s, box-shadow .22s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .service-card.a::before { background: linear-gradient(90deg, var(--brand), var(--accent)); }
+    .service-card.b::before { background: linear-gradient(90deg, var(--accent), var(--cyan)); }
+    .service-card.c::before { background: linear-gradient(90deg, var(--cyan), var(--brand)); }
+
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .sc-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .sc-icon.a { background: rgba(87,44,166,.10); }
+    .sc-icon.b { background: rgba(229,47,107,.10); }
+    .sc-icon.c { background: rgba(0,174,239,.10); }
+    .service-card h3 {
+      font-family: var(--font-head);
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .service-card p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+    .sc-items {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .sc-item {
+      font-size: 12px; font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      color: var(--brand);
+      background: var(--surface);
+    }
+
+    /* ─── FORMATS TABLE ─────────────────────────────────────────*/
+    #formatos { background: white; }
+    .formats-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .formats-copy h2 { text-align: left; }
+    .formats-copy .section-sub { text-align: left; margin: 0 0 32px; }
+    .formats-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .formats-table thead {
+      background: linear-gradient(135deg, var(--brand), #7c3aed);
+      color: white;
+    }
+    .formats-table th {
+      font-family: var(--font-head);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 14px 16px;
+      text-align: left;
+    }
+    .formats-table td {
+      font-size: 13px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .formats-table tbody tr:last-child td { border-bottom: none; }
+    .formats-table tbody tr:nth-child(even) td { background: var(--surface); }
+    .format-badge {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 13px;
+      color: white;
+      padding: 3px 11px;
+      border-radius: 6px;
+    }
+    .f-a0 { background: #572CA6; }
+    .f-a1 { background: #6d35cc; }
+    .f-a2 { background: #7c3aed; }
+    .f-a3 { background: #E52F6B; }
+    .f-a4 { background: #00AEEF; }
+    .f-a5 { background: #0ea5e9; }
+    .f-a6 { background: #38bdf8; }
+
+    /* ─── PROCESS ────────────────────────────────────────────────*/
+    #proceso { background: var(--surface); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 15%; right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--brand), var(--accent), var(--cyan));
+      border-radius: 1px;
+    }
+    .process-step {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 24px;
+      position: relative; z-index: 1;
+    }
+    .step-num {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+      font-size: 26px; font-weight: 800;
+      color: white;
+      margin-bottom: 20px;
+      border: 4px solid white;
+      box-shadow: var(--shadow);
+    }
+    .step-num.s1 { background: var(--brand); }
+    .step-num.s2 { background: var(--accent); }
+    .step-num.s3 { background: var(--cyan); }
+    .process-step h3 {
+      font-family: var(--font-head);
+      font-size: 17px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .process-step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── GALLERY ────────────────────────────────────────────────*/
+    #galeria {
+      background: #0d0b14;
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #galeria::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(87,44,166,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(229,47,107,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    #galeria .tag {
+      color: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.12);
+    }
+    #galeria h2 { color: #fff; }
+    #galeria .section-sub { color: rgba(255,255,255,.5); }
+
+    /* Filter tabs */
+    .gallery-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .gf-btn {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 8px 20px;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.55);
+      cursor: pointer;
+      transition: all .22s;
+    }
+    .gf-btn:hover {
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.9);
+      border-color: rgba(255,255,255,.25);
+    }
+    .gf-btn.active {
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(229,47,107,.35);
+    }
+
+    /* Masonry grid */
+    .gallery-masonry {
+      columns: 4;
+      column-gap: 16px;
+    }
+    @media (max-width: 1024px) { .gallery-masonry { columns: 3; } }
+    @media (max-width: 680px)  { .gallery-masonry { columns: 2; } }
+    @media (max-width: 400px)  { .gallery-masonry { columns: 1; } }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      /* entrance animation */
+      opacity: 0;
+      transform: translateY(20px) scale(.97);
+      transition: opacity .45s ease, transform .45s ease;
+    }
+    .gallery-item.gi-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .gallery-item.gi-hidden {
+      display: none;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform .5s cubic-bezier(.25,.46,.45,.94);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+
+    /* Overlay on hover */
+    .gi-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(87,44,166,.72) 0%, rgba(229,47,107,.65) 100%);
+      opacity: 0;
+      transition: opacity .3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 20px;
+    }
+    .gallery-item:hover .gi-overlay { opacity: 1; }
+    .gi-overlay-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      transform: scale(.7);
+      transition: transform .28s .05s;
+    }
+    .gallery-item:hover .gi-overlay-icon { transform: scale(1); }
+    .gi-overlay-title {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .25s .1s, transform .25s .1s;
+    }
+    .gi-overlay-cat {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.7);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .25s .15s, transform .25s .15s;
+    }
+    .gallery-item:hover .gi-overlay-title,
+    .gallery-item:hover .gi-overlay-cat {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* Placeholder card (empty slot) */
+    .gallery-placeholder {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      border: 2px dashed rgba(255,255,255,.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 40px 20px;
+      min-height: 180px;
+      color: rgba(255,255,255,.2);
+      font-size: 13px;
+      font-family: var(--font-head);
+    }
+    .gallery-placeholder span { font-size: 28px; opacity: .4; }
+
+    /* Gallery CTA */
+    .gallery-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+    .gallery-cta p {
+      color: rgba(255,255,255,.4);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* ─── LIGHTBOX ───────────────────────────────────────────────*/
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(5,3,12,.94);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .lightbox.lb-open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lb-inner {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .lb-img-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,.6);
+      max-height: 75vh;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .lb-img-wrap img {
+      max-height: 75vh;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      border-radius: 18px;
+    }
+    .lb-info {
+      text-align: center;
+    }
+    .lb-info h3 {
+      font-family: var(--font-head);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .lb-info span {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      background: rgba(255,255,255,.07);
+      padding: 3px 12px;
+      border-radius: 99px;
+    }
+    .lb-close {
+      position: fixed;
+      top: 20px; right: 20px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.15);
+      color: white;
+      font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      z-index: 10000;
+    }
+    .lb-close:hover { background: rgba(229,47,107,.6); transform: scale(1.1); }
+    .lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.15);
+      color: white;
+      font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      z-index: 10000;
+    }
+    .lb-nav:hover { background: rgba(87,44,166,.7); }
+    .lb-prev { left: 16px; }
+    .lb-next { right: 16px; }
+    .lb-counter {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-size: 13px; color: rgba(255,255,255,.4);
+      font-family: var(--font-head);
+      font-weight: 600;
+      letter-spacing: .1em;
+    }
+
+    /* ─── CTA BANNER ─────────────────────────────────────────────*/
+    #contacto {
+      background: linear-gradient(135deg, var(--brand) 0%, #7c3aed 50%, #E52F6B 100%);
+      padding: 96px 0;
+    }
+    .cta-inner { text-align: center; color: white; }
+    .cta-inner .tag {
+      color: white;
+      background: rgba(255,255,255,.15);
+      border-color: rgba(255,255,255,.25);
+    }
+    .cta-inner h2 {
+      color: white;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 16px;
+    }
+    .cta-inner h2 em { -webkit-text-fill-color: white; filter: none; }
+    .cta-inner p {
+      color: rgba(255,255,255,.80);
+      font-size: 17px; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: white;
+      color: var(--brand);
+      font-family: var(--font-head);
+      font-weight: 700; font-size: 15px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: none; cursor: pointer;
+      transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 6px 20px rgba(0,0,0,.2);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.3); }
+    .btn-outline-white {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,.6);
+      font-family: var(--font-head);
+      font-weight: 700; font-size: 15px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .18s, border-color .18s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); border-color: white; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────*/
+    footer {
+      background: #0f0a1e;
+      color: rgba(255,255,255,.6);
+      padding: 48px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .logo { color: white; margin-bottom: 12px; }
+    .footer-brand p { font-size: 14px; line-height: 1.65; max-width: 280px; }
+    .footer-col h4 {
+      font-family: var(--font-head);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: white; margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,.55); transition: color .18s; }
+    .footer-col ul li a:hover { color: white; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom span { font-size: 13px; }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .18s;
+      cursor: pointer;
+    }
+    .social-icon:hover { background: rgba(255,255,255,.15); }
+    .social-icon svg { width: 16px; height: 16px; fill: rgba(255,255,255,.6); }
+
+    /* ─── WHATSAPP FLOAT ──────────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 999;
+      width: 58px; height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,.45);
+      cursor: pointer;
+      transition: transform .22s, box-shadow .22s;
+      text-decoration: none;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 32px rgba(37,211,102,.55); }
+    .wa-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────────────*/
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up:nth-child(1) { transition-delay: 0s; }
+    .fade-up:nth-child(2) { transition-delay: .1s; }
+    .fade-up:nth-child(3) { transition-delay: .2s; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────────*/
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { display: none; }
+      .services-grid { grid-template-columns: 1fr; }
+      .formats-wrap { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; gap: 40px; }
+      .process-steps::before { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .hero-logo { height: 100px; }
+    }
+    @media (max-width: 640px) {
+      section { padding: 64px 0; }
+      .hero-actions { flex-direction: column; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────────────────────── -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">
+        <img src="Logo.png" alt="Crisvect — Impresión Creativa y Diseño Gráfico" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#formatos">Formatos</a></li>
+        <li><a href="#proceso">¿Cómo pedimos?</a></li>
+        <li><a href="#galeria">Portafolio</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20hacer%20un%20pedido" class="btn btn-accent" target="_blank" rel="noopener">
+          📲 WhatsApp
+        </a>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menú" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#servicios">Servicios</a>
+    <a href="#formatos">Formatos de impresión</a>
+    <a href="#proceso">¿Cómo pedimos?</a>
+    <a href="#galeria">Portafolio</a>
+    <a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20hacer%20un%20pedido" style="color: var(--accent); font-weight:700;" target="_blank" rel="noopener">📲 Escribir por WhatsApp</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-shape hero-shape-1"></div>
+  <div class="hero-shape hero-shape-2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Copy -->
+      <div class="hero-copy">
+        <div class="hero-logo-wrap">
+          <img src="Logo.png" alt="Crisvect" class="hero-logo" />
+        </div>
+        <div class="hero-eyebrow">
+          <span></span>
+          Barquisimeto, Venezuela
+        </div>
+        <h1>
+          Impresión creativa<br />
+          y <em>diseño gráfico</em><br />
+          que resuelve todo
+        </h1>
+        <p class="hero-desc">
+          Logos, stickers, láminas escolares, maquetas, arreglos especiales y publicidad digital. Si lo imaginas, en Crisvect te lo hacemos realidad.
+        </p>
+        <div class="hero-actions">
+          <a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20cotizar%20un%20trabajo" class="btn btn-accent" target="_blank" rel="noopener">
+            💬 Pedir cotización
+          </a>
+          <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p class="hero-trust-text"><strong>Impresión + Diseño + Manualidades</strong> — todo en un solo lugar</p>
+        </div>
+      </div>
+      <!-- Visual Card -->
+      <div class="hero-visual">
+        <div class="hero-card-main">
+          <p class="hc-label">Nuestros servicios</p>
+          <div class="hc-services">
+            <div class="hc-service">
+              <div class="hc-icon violet">🖨️</div>
+              <div>
+                <div class="hc-service-name">Impresión & Diseño</div>
+                <div class="hc-service-sub">Logos, stickers, etiquetas, formatos A0–A6</div>
+              </div>
+            </div>
+            <div class="hc-service">
+              <div class="hc-icon pink">📢</div>
+              <div>
+                <div class="hc-service-name">Publicidad Digital</div>
+                <div class="hc-service-sub">Carteles, avisos, piezas para redes sociales</div>
+              </div>
+            </div>
+            <div class="hc-service">
+              <div class="hc-icon cyan">✂️</div>
+              <div>
+                <div class="hc-service-name">Manualidades & Arreglos</div>
+                <div class="hc-service-sub">Láminas, maquetas, ramos de flores eternas</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-badge">
+            📍 Barquisimeto<br />Estado Lara
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─────────────────────────────────────────────────── -->
+<section id="servicios">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Lo que hacemos</span>
+      <h2>Soluciones creativas para <em>cada necesidad</em></h2>
+      <p class="section-sub">Desde el logo de tu marca hasta la maqueta de la tarea de tus hijos — aquí encontrás todo.</p>
+    </div>
+    <div class="services-grid">
+      <!-- Card 1 -->
+      <div class="service-card a fade-up">
+        <div class="sc-icon a">🖨️</div>
+        <h3>Impresión, Papelería y Diseño</h3>
+        <p>Trabajamos con todos los formatos, desde A6 hasta A0. Creamos tu identidad visual desde cero y producimos toda tu papelería con calidad profesional.</p>
+        <div class="sc-items">
+          <span class="sc-item">Logos</span>
+          <span class="sc-item">Stickers</span>
+          <span class="sc-item">Etiquetas</span>
+          <span class="sc-item">Toppers</span>
+          <span class="sc-item">Letras Cameo</span>
+          <span class="sc-item">Impresiones A0–A6</span>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="service-card b fade-up">
+        <div class="sc-icon b">📢</div>
+        <h3>Publicidad Digital y Visual</h3>
+        <p>Creamos piezas publicitarias completas para tu negocio o evento, tanto en físico como en formato digital listo para publicar en redes sociales.</p>
+        <div class="sc-items">
+          <span class="sc-item">Carteles</span>
+          <span class="sc-item">Avisos</span>
+          <span class="sc-item">Videos para redes</span>
+          <span class="sc-item">Imágenes digitales</span>
+          <span class="sc-item">Publicidad de eventos</span>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="service-card c fade-up">
+        <div class="sc-icon c">✂️</div>
+        <h3>Manualidades, Escolar y Arreglos</h3>
+        <p>Láminas hechas a mano con marcadores y témperas, o impresas en gran formato. Maquetas detalladas, arreglos decorados y ramos de flores eternas.</p>
+        <div class="sc-items">
+          <span class="sc-item">Láminas a mano</span>
+          <span class="sc-item">Láminas impresas</span>
+          <span class="sc-item">Maquetas</span>
+          <span class="sc-item">Ramos eternos</span>
+          <span class="sc-item">Arreglos decorados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FORMATS ──────────────────────────────────────────────────── -->
+<section id="formatos">
+  <div class="container">
+    <div class="formats-wrap">
+      <div class="formats-copy">
+        <span class="tag">Formatos de impresión</span>
+        <h2>Del A6 al <em>A0</em>,<br />lo hacemos todo</h2>
+        <p class="section-sub">Desde una postal pequeña hasta un cartel gigante para tu evento o local. Consultanos el formato que necesitas.</p>
+        <br />
+        <a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20saber%20los%20precios%20de%20impresion" class="btn btn-primary" target="_blank" rel="noopener">
+          Ver precios por WhatsApp
+        </a>
+      </div>
+      <div>
+        <table class="formats-table">
+          <thead>
+            <tr>
+              <th>Formato</th>
+              <th>Medidas (cm)</th>
+              <th>Uso típico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="format-badge f-a0">A0</span></td>
+              <td>84.1 × 118.9</td>
+              <td>Carteles gigantes, mapas</td>
+            </tr>
+            <tr>
+              <td><span class="format-badge f-a1">A1</span></td>
+              <td>59.4 × 84.1</td>
+              <td>Posters, afiches publicitarios</td>
+            </tr>
+            <tr>
+              <td><span class="format-badge f-a2">A2</span></td>
+              <td>42.0 × 59.4</td>
+              <td>Calendarios, carteleras</td>
+            </tr>
+            <tr>
+              <td><span class="format-badge f-a3">A3</span></td>
+              <td>29.7 × 42.0</td>
+              <td>Diplomas, láminas escolares</td>
+            </tr>
+            <tr>
+              <td><span class="format-badge f-a4">A4</span></td>
+              <td>21.0 × 29.7</td>
+              <td>Cartas, trabajos, folletos</td>
+            </tr>
+            <tr>
+              <td><span class="format-badge f-a5">A5</span></td>
+              <td>14.8 × 21.0</td>
+              <td>Agendas, folletos</td>
+            </tr>
+            <tr>
+              <td><span class="format-badge f-a6">A6</span></td>
+              <td>10.5 × 14.8</td>
+              <td>Postales, tarjetas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ──────────────────────────────────────────────────── -->
+<section id="proceso">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">¿Cómo funciona?</span>
+      <h2>Tu pedido en <em>3 pasos</em></h2>
+      <p class="section-sub">Proceso simple y rápido. Sin complicaciones, sin vueltas.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step fade-up">
+        <div class="step-num s1">1</div>
+        <h3>Escríbenos</h3>
+        <p>Cuéntanos lo que necesitas por WhatsApp o Instagram. No importa si aún no tienes todo claro — te ayudamos a definirlo.</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num s2">2</div>
+        <h3>Te cotizamos</h3>
+        <p>Te enviamos el precio y los detalles del trabajo. Aprobado el pedido, arrancamos de inmediato con tu diseño.</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num s3">3</div>
+        <h3>Recibís tu pedido</h3>
+        <p>Entregamos el trabajo terminado con la calidad que mereces. Impresión, diseño o manualidad, lista para usar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ──────────────────────────────────────────────────── -->
+<section id="galeria">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="section-head">
+      <span class="tag">Portafolio</span>
+      <h2>Nuestros <em>trabajos</em></h2>
+      <p class="section-sub">Una muestra de lo que creamos con dedicación para cada cliente.</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="gallery-filters">
+      <button class="gf-btn active" data-filter="all">Todos</button>
+      <button class="gf-btn" data-filter="impresion">🖨️ Impresión</button>
+      <button class="gf-btn" data-filter="diseno">✏️ Diseño</button>
+      <button class="gf-btn" data-filter="stickers">🏷️ Stickers</button>
+      <button class="gf-btn" data-filter="laminas">📋 Láminas</button>
+      <button class="gf-btn" data-filter="arreglos">💐 Arreglos</button>
+      <button class="gf-btn" data-filter="publicidad">📢 Publicidad</button>
+    </div>
+
+    <!-- Grid Masonry -->
+    <div class="gallery-masonry" id="galleryGrid">
+      <!-- Las imágenes se generan dinámicamente desde el array GALLERY_ITEMS en el JS -->
+      <!-- Para agregar fotos: edita el array GALLERY_ITEMS al final del script -->
+    </div>
+
+    <!-- CTA bottom -->
+    <div class="gallery-cta">
+      <p>¿Quieres ver más trabajos o tienes un proyecto similar?</p>
+      <a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20ver%20m%C3%A1s%20trabajos%20y%20cotizar" class="btn btn-accent" target="_blank" rel="noopener">
+        💬 Pedir cotización
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LIGHTBOX ──────────────────────────────────────────────────── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de imagen">
+  <button class="lb-close" id="lbClose" aria-label="Cerrar">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Siguiente">›</button>
+  <div class="lb-inner">
+    <div class="lb-img-wrap">
+      <img id="lbImg" src="" alt="" />
+    </div>
+    <div class="lb-info">
+      <h3 id="lbTitle"></h3>
+      <span id="lbCat"></span>
+    </div>
+  </div>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<!-- ─── CTA ──────────────────────────────────────────────────────── -->
+<section id="contacto">
+  <div class="container">
+    <div class="cta-inner">
+      <span class="tag">¡Hablemos!</span>
+      <h2>¿Tenés un proyecto en mente?</h2>
+      <p>Desde un logo hasta una lámina escolar gigante hecha a mano. Cuéntanos qué necesitas y lo hacemos realidad.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20hacer%20un%20pedido" class="btn-white" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#25D366;flex-shrink:0">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M11.95 0C5.358 0 .002 5.355.002 11.944c0 2.108.553 4.149 1.605 5.935L0 24l6.302-1.652A11.93 11.93 0 0011.95 23.89c6.593 0 11.95-5.355 11.95-11.946C23.9 5.355 18.543 0 11.95 0zm0 21.844a9.895 9.895 0 01-5.044-1.38l-.361-.214-3.742.981 1.001-3.64-.237-.374a9.877 9.877 0 01-1.517-5.273c0-5.47 4.454-9.921 9.9-9.921 5.447 0 9.9 4.451 9.9 9.921 0 5.471-4.453 9.9-9.9 9.9z"/>
+          </svg>
+          Escribir por WhatsApp
+        </a>
+        <a href="https://instagram.com" class="btn-outline-white" target="_blank" rel="noopener">
+          📸 Ver Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="logo">
+          <img src="Logo.png" alt="Crisvect" />
+        </a>
+        <p>Impresión creativa y diseño gráfico en Barquisimeto, Estado Lara, Venezuela.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#servicios">Impresión y papelería</a></li>
+          <li><a href="#servicios">Diseño gráfico</a></li>
+          <li><a href="#servicios">Publicidad digital</a></li>
+          <li><a href="#servicios">Láminas escolares</a></li>
+          <li><a href="#servicios">Arreglos y ramos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/584121523043" target="_blank" rel="noopener">+58 412-1523043</a></li>
+          <li><a href="#contacto">Barquisimeto, Lara</a></li>
+          <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Crisvect. Todos los derechos reservados.</span>
+      <div class="footer-socials">
+        <!-- Instagram icon -->
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <!-- WhatsApp icon -->
+        <a href="https://wa.me/584121523043" target="_blank" rel="noopener" class="social-icon" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M11.95 0C5.358 0 .002 5.355.002 11.944c0 2.108.553 4.149 1.605 5.935L0 24l6.302-1.652A11.93 11.93 0 0011.95 23.89c6.593 0 11.95-5.355 11.95-11.946C23.9 5.355 18.543 0 11.95 0zm0 21.844a9.895 9.895 0 01-5.044-1.38l-.361-.214-3.742.981 1.001-3.64-.237-.374a9.877 9.877 0 01-1.517-5.273c0-5.47 4.454-9.921 9.9-9.921 5.447 0 9.9 4.451 9.9 9.921 0 5.471-4.453 9.9-9.9 9.9z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── WHATSAPP FLOAT ─────────────────────────────────────────────── -->
+<a href="https://wa.me/584121523043?text=Hola%20Crisvect%2C%20quiero%20hacer%20un%20pedido" class="wa-float" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M11.95 0C5.358 0 .002 5.355.002 11.944c0 2.108.553 4.149 1.605 5.935L0 24l6.302-1.652A11.93 11.93 0 0011.95 23.89c6.593 0 11.95-5.355 11.95-11.946C23.9 5.355 18.543 0 11.95 0zm0 21.844a9.895 9.895 0 01-5.044-1.38l-.361-.214-3.742.981 1.001-3.64-.237-.374a9.877 9.877 0 01-1.517-5.273c0-5.47 4.454-9.921 9.9-9.921 5.447 0 9.9 4.451 9.9 9.921 0 5.471-4.453 9.9-9.9 9.9z"/>
+  </svg>
+</a>
+
+<!-- ─── JS ────────────────────────────────────────────────────────── -->
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Scroll animations
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ─── GALLERY ─────────────────────────────────────────────────
+  /**
+   * CÓMO AGREGAR FOTOS:
+   * Agrega un objeto al array GALLERY_ITEMS con este formato:
+   * {
+   *   src:   'fotos/nombre-del-archivo.jpg',  // ruta relativa desde index.html
+   *   title: 'Nombre del trabajo',
+   *   cat:   'impresion'  // una de: impresion | diseno | stickers | laminas | arreglos | publicidad
+   * }
+   */
+  const GALLERY_ITEMS = [
+    // ── EJEMPLOS — reemplaza con tus fotos reales ──────────────
+    // { src: 'fotos/logo-empresa-abc.jpg',     title: 'Logo Empresa ABC',        cat: 'diseno'     },
+    // { src: 'fotos/stickers-dulceria.jpg',    title: 'Stickers Dulcería',        cat: 'stickers'   },
+    // { src: 'fotos/lamina-biologia.jpg',      title: 'Lámina de Biología A1',    cat: 'laminas'    },
+    // { src: 'fotos/ramo-eternas.jpg',         title: 'Ramo Flores Eternas',      cat: 'arreglos'   },
+    // { src: 'fotos/afiche-evento.jpg',        title: 'Afiche Evento Quinceañera',cat: 'publicidad' },
+    // { src: 'fotos/impresion-a0.jpg',         title: 'Impresión A0 Exposición',  cat: 'impresion'  },
+  ];
+
+  const CAT_LABELS = {
+    impresion:  '🖨️ Impresión',
+    diseno:     '✏️ Diseño',
+    stickers:   '🏷️ Stickers',
+    laminas:    '📋 Láminas',
+    arreglos:   '💐 Arreglos',
+    publicidad: '📢 Publicidad',
+  };
+
+  // ── Número de placeholders a mostrar cuando no hay imágenes reales
+  const PLACEHOLDER_COUNT = 8;
+
+  const grid       = document.getElementById('galleryGrid');
+  const lightbox   = document.getElementById('lightbox');
+  const lbImg      = document.getElementById('lbImg');
+  const lbTitle    = document.getElementById('lbTitle');
+  const lbCat      = document.getElementById('lbCat');
+  const lbCounter  = document.getElementById('lbCounter');
+  const lbClose    = document.getElementById('lbClose');
+  const lbPrev     = document.getElementById('lbPrev');
+  const lbNext     = document.getElementById('lbNext');
+
+  let currentFilter  = 'all';
+  let filteredItems  = [];
+  let currentIndex   = 0;
+
+  // ── Render grid
+  function renderGallery() {
+    grid.innerHTML = '';
+    const items = currentFilter === 'all'
+      ? GALLERY_ITEMS
+      : GALLERY_ITEMS.filter(i => i.cat === currentFilter);
+    filteredItems = items;
+
+    if (items.length === 0) {
+      // Show placeholder slots
+      const count = currentFilter === 'all' ? PLACEHOLDER_COUNT : 4;
+      for (let i = 0; i < count; i++) {
+        const ph = document.createElement('div');
+        ph.className = 'gallery-placeholder';
+        ph.innerHTML = '<span>🖼️</span>Próximamente';
+        grid.appendChild(ph);
+      }
+      return;
+    }
+
+    items.forEach((item, idx) => {
+      const el = document.createElement('div');
+      el.className = 'gallery-item';
+      el.dataset.index = idx;
+      el.innerHTML = `
+        <img src="${item.src}" alt="${item.title}" loading="lazy" />
+        <div class="gi-overlay">
+          <div class="gi-overlay-icon">🔍</div>
+          <div class="gi-overlay-title">${item.title}</div>
+          <div class="gi-overlay-cat">${CAT_LABELS[item.cat] || item.cat}</div>
+        </div>
+      `;
+      el.addEventListener('click', () => openLightbox(idx));
+      grid.appendChild(el);
+
+      // Staggered entrance
+      requestAnimationFrame(() => {
+        setTimeout(() => el.classList.add('gi-visible'), idx * 60);
+      });
+    });
+  }
+
+  // ── Filters
+  document.querySelectorAll('.gf-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderGallery();
+    });
+  });
+
+  // ── Lightbox
+  function openLightbox(idx) {
+    if (filteredItems.length === 0) return;
+    currentIndex = idx;
+    updateLightbox();
+    lightbox.classList.add('lb-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightbox() {
+    const item = filteredItems[currentIndex];
+    lbImg.src = item.src;
+    lbImg.alt = item.title;
+    lbTitle.textContent = item.title;
+    lbCat.textContent = CAT_LABELS[item.cat] || item.cat;
+    lbCounter.textContent = `${currentIndex + 1} / ${filteredItems.length}`;
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
+    updateLightbox();
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % filteredItems.length;
+    updateLightbox();
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', prevImage);
+  lbNext.addEventListener('click', nextImage);
+
+  // Close on backdrop click
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('lb-open')) return;
+    if (e.key === 'Escape')      closeLightbox();
+    if (e.key === 'ArrowLeft')   prevImage();
+    if (e.key === 'ArrowRight')  nextImage();
+  });
+
+  // Touch swipe on lightbox
+  let lbTouchStartX = 0;
+  lightbox.addEventListener('touchstart', e => { lbTouchStartX = e.touches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - lbTouchStartX;
+    if (Math.abs(dx) > 50) { dx < 0 ? nextImage() : prevImage(); }
+  });
+
+  // Initial render
+  renderGallery();
+
+  // Navbar background on scroll
+  const navEl = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    navEl.style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(87,44,166,.10)' : 'none';
+  });</script>
+</body>
+</html>
