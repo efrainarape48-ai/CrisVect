@@ -1332,105 +1332,144 @@
   }, { threshold: 0.15 });
   fadeEls.forEach(el => observer.observe(el));
 
-  // ─── GALLERY ─────────────────────────────────────────────────
-  /**
-   * CÓMO AGREGAR FOTOS:
-   * Agrega un objeto al array GALLERY_ITEMS con este formato:
-   * {
-   *   src:   'fotos/nombre-del-archivo.jpg',  // ruta relativa desde index.html
-   *   title: 'Nombre del trabajo',
-   *   cat:   'impresion'  // una de: impresion | diseno | stickers | laminas | arreglos | publicidad
-   * }
-   */
-  const GALLERY_ITEMS = [
-    // ── IMPRESIÓN (agrega hasta IMPRESION20.png) ───────────────
-    { src: 'fotos/impresion/IMPRESION1.png', title: 'Impresión Ejemplo 1', cat: 'impresion' },
+  // ─── GALERÍA AUTOMÁTICA — lee desde GitHub API ────────────────
+  // Para agregar fotos: sube el archivo a la carpeta correcta en GitHub.
+  // La galería lo detecta sola. No hay que tocar código.
+  //
+  // Convención de nombres (cualquier extensión .png .jpg .jpeg .webp):
+  //   fotos/impresion/IMPRESION1.png, IMPRESION2.png ...
+  //   fotos/diseno/DISENO1.png, DISENO2.png ...
+  //   fotos/stickers/STICKER1.png ...
+  //   fotos/laminas/LAMINA1.png ...
+  //   fotos/arreglos/ARREGLO1.png ...
+  //   fotos/publicidad/PUBLICIDAD1.png ...
 
-    // ── DISEÑO (agrega hasta DISENO20.png) ────────────────────
-    { src: 'fotos/diseno/DISENO1.png', title: 'Diseño Ejemplo 1', cat: 'diseno' },
+  const GITHUB_REPO  = 'efrainarape48-ai/CrisVect';
+  const GITHUB_RAW   = 'https://raw.githubusercontent.com/' + GITHUB_REPO + '/main/';
+  const GITHUB_API   = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/';
 
-    // ── STICKERS (agrega hasta STICKER20.png) ─────────────────
-    { src: 'fotos/stickers/STICKER1.png', title: 'Sticker Ejemplo 1', cat: 'stickers' },
-
-    // ── LÁMINAS (agrega hasta LAMINA20.png) ───────────────────
-    { src: 'fotos/laminas/LAMINA1.png', title: 'Lámina Ejemplo 1', cat: 'laminas' },
-
-    // ── ARREGLOS (agrega hasta ARREGLO20.png) ─────────────────
-    { src: 'fotos/arreglos/ARREGLO1.png', title: 'Arreglo Ejemplo 1', cat: 'arreglos' },
-
-    // ── PUBLICIDAD (agrega hasta PUBLICIDAD20.png) ────────────
-    { src: 'fotos/publicidad/PUBLICIDAD1.png', title: 'Publicidad Ejemplo 1', cat: 'publicidad' },
+  const CATEGORIES = [
+    { key: 'impresion',  folder: 'fotos/impresion',  label: '🖨️ Impresión' },
+    { key: 'diseno',     folder: 'fotos/diseno',     label: '✏️ Diseño'    },
+    { key: 'stickers',   folder: 'fotos/stickers',   label: '🏷️ Stickers'  },
+    { key: 'laminas',    folder: 'fotos/laminas',     label: '📋 Láminas'   },
+    { key: 'arreglos',   folder: 'fotos/arreglos',   label: '💐 Arreglos'  },
+    { key: 'publicidad', folder: 'fotos/publicidad', label: '📢 Publicidad' },
   ];
 
-  const CAT_LABELS = {
-    impresion:  '🖨️ Impresión',
-    diseno:     '✏️ Diseño',
-    stickers:   '🏷️ Stickers',
-    laminas:    '📋 Láminas',
-    arreglos:   '💐 Arreglos',
-    publicidad: '📢 Publicidad',
-  };
+  const IMG_EXTS = ['.png','.jpg','.jpeg','.webp','.PNG','.JPG','.JPEG','.WEBP'];
 
-  // ── Número de placeholders a mostrar cuando no hay imágenes reales
-  const PLACEHOLDER_COUNT = 8;
+  const grid      = document.getElementById('galleryGrid');
+  const lightbox  = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lbImg');
+  const lbTitle   = document.getElementById('lbTitle');
+  const lbCat     = document.getElementById('lbCat');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbClose   = document.getElementById('lbClose');
+  const lbPrev    = document.getElementById('lbPrev');
+  const lbNext    = document.getElementById('lbNext');
 
-  const grid       = document.getElementById('galleryGrid');
-  const lightbox   = document.getElementById('lightbox');
-  const lbImg      = document.getElementById('lbImg');
-  const lbTitle    = document.getElementById('lbTitle');
-  const lbCat      = document.getElementById('lbCat');
-  const lbCounter  = document.getElementById('lbCounter');
-  const lbClose    = document.getElementById('lbClose');
-  const lbPrev     = document.getElementById('lbPrev');
-  const lbNext     = document.getElementById('lbNext');
+  let allItems      = [];   // todos los items cargados
+  let filteredItems = [];
+  let currentFilter = 'all';
+  let currentIndex  = 0;
 
-  let currentFilter  = 'all';
-  let filteredItems  = [];
-  let currentIndex   = 0;
+  // ── Limpia el nombre de archivo para usarlo como título
+  function nameToTitle(filename) {
+    return filename
+      .replace(/\.[^.]+$/, '')           // quita extensión
+      .replace(/([A-Z])/g, ' $1')        // CamelCase → espacios
+      .replace(/(\d+)$/, ' $1')          // número al final con espacio
+      .trim();
+  }
 
-  // ── Render grid
+  // ── Muestra spinner mientras carga
+  function showLoading() {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:rgba(255,255,255,.3);">
+        <div style="font-size:32px;margin-bottom:12px;animation:spin 1s linear infinite;display:inline-block;">⟳</div>
+        <p style="font-family:var(--font-head);font-size:14px;letter-spacing:.1em;">Cargando galería...</p>
+      </div>`;
+  }
+
+  // ── Muestra placeholders si una carpeta está vacía
+  function showPlaceholders(count = 4) {
+    for (let i = 0; i < count; i++) {
+      const ph = document.createElement('div');
+      ph.className = 'gallery-placeholder';
+      ph.innerHTML = '<span>🖼️</span>Próximamente';
+      grid.appendChild(ph);
+    }
+  }
+
+  // ── Fetch una carpeta de GitHub y retorna array de items
+  async function fetchFolder(cat) {
+    try {
+      const res = await fetch(GITHUB_API + cat.folder, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (!res.ok) return [];
+      const files = await res.json();
+      return files
+        .filter(f => f.type === 'file' && IMG_EXTS.some(e => f.name.endsWith(e)))
+        .map(f => ({
+          src:   GITHUB_RAW + f.path,
+          title: nameToTitle(f.name),
+          cat:   cat.key,
+          label: cat.label,
+          name:  f.name,
+        }))
+        .sort((a, b) => {
+          // Orden natural: IMPRESION1, IMPRESION2, IMPRESION10 (no IMPRESION10 antes de IMPRESION2)
+          const na = parseInt(a.name.match(/\d+/) || [0]);
+          const nb = parseInt(b.name.match(/\d+/) || [0]);
+          return na - nb;
+        });
+    } catch(e) {
+      return [];
+    }
+  }
+
+  // ── Carga todas las carpetas en paralelo
+  async function loadAllImages() {
+    showLoading();
+    const results = await Promise.all(CATEGORIES.map(fetchFolder));
+    allItems = results.flat();
+    renderGallery();
+  }
+
+  // ── Render grid según filtro activo
   function renderGallery() {
     grid.innerHTML = '';
-    const items = currentFilter === 'all'
-      ? GALLERY_ITEMS
-      : GALLERY_ITEMS.filter(i => i.cat === currentFilter);
-    filteredItems = items;
 
-    if (items.length === 0) {
-      // Show placeholder slots
-      const count = currentFilter === 'all' ? PLACEHOLDER_COUNT : 4;
-      for (let i = 0; i < count; i++) {
-        const ph = document.createElement('div');
-        ph.className = 'gallery-placeholder';
-        ph.innerHTML = '<span>🖼️</span>Próximamente';
-        grid.appendChild(ph);
-      }
+    filteredItems = currentFilter === 'all'
+      ? [...allItems].sort(() => Math.random() - 0.5)  // aleatorio en "Todos"
+      : allItems.filter(i => i.cat === currentFilter);
+
+    if (filteredItems.length === 0) {
+      showPlaceholders(currentFilter === 'all' ? 8 : 4);
       return;
     }
 
-    items.forEach((item, idx) => {
+    filteredItems.forEach((item, idx) => {
       const el = document.createElement('div');
       el.className = 'gallery-item';
-      el.dataset.index = idx;
       el.innerHTML = `
         <img src="${item.src}" alt="${item.title}" loading="lazy" />
         <div class="gi-overlay">
           <div class="gi-overlay-icon">🔍</div>
           <div class="gi-overlay-title">${item.title}</div>
-          <div class="gi-overlay-cat">${CAT_LABELS[item.cat] || item.cat}</div>
-        </div>
-      `;
+          <div class="gi-overlay-cat">${item.label}</div>
+        </div>`;
       el.addEventListener('click', () => openLightbox(idx));
       grid.appendChild(el);
-
-      // Staggered entrance
       requestAnimationFrame(() => {
-        setTimeout(() => el.classList.add('gi-visible'), idx * 60);
+        setTimeout(() => el.classList.add('gi-visible'), idx * 55);
       });
     });
   }
 
-  // ── Filters
+  // ── Filtros
   document.querySelectorAll('.gf-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
@@ -1442,32 +1481,28 @@
 
   // ── Lightbox
   function openLightbox(idx) {
-    if (filteredItems.length === 0) return;
+    if (!filteredItems.length) return;
     currentIndex = idx;
     updateLightbox();
     lightbox.classList.add('lb-open');
     document.body.style.overflow = 'hidden';
   }
-
   function closeLightbox() {
     lightbox.classList.remove('lb-open');
     document.body.style.overflow = '';
   }
-
   function updateLightbox() {
     const item = filteredItems[currentIndex];
     lbImg.src = item.src;
     lbImg.alt = item.title;
     lbTitle.textContent = item.title;
-    lbCat.textContent = CAT_LABELS[item.cat] || item.cat;
+    lbCat.textContent = item.label;
     lbCounter.textContent = `${currentIndex + 1} / ${filteredItems.length}`;
   }
-
   function prevImage() {
     currentIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
     updateLightbox();
   }
-
   function nextImage() {
     currentIndex = (currentIndex + 1) % filteredItems.length;
     updateLightbox();
@@ -1476,30 +1511,27 @@
   lbClose.addEventListener('click', closeLightbox);
   lbPrev.addEventListener('click', prevImage);
   lbNext.addEventListener('click', nextImage);
-
-  // Close on backdrop click
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  // Keyboard navigation
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('lb-open')) return;
-    if (e.key === 'Escape')      closeLightbox();
-    if (e.key === 'ArrowLeft')   prevImage();
-    if (e.key === 'ArrowRight')  nextImage();
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  prevImage();
+    if (e.key === 'ArrowRight') nextImage();
   });
-
-  // Touch swipe on lightbox
-  let lbTouchStartX = 0;
-  lightbox.addEventListener('touchstart', e => { lbTouchStartX = e.touches[0].clientX; }, { passive: true });
-  lightbox.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - lbTouchStartX;
+  let lbTouchX = 0;
+  lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - lbTouchX;
     if (Math.abs(dx) > 50) { dx < 0 ? nextImage() : prevImage(); }
   });
 
-  // Initial render
-  renderGallery();
+  // ── Spin animation para el loader
+  const spinStyle = document.createElement('style');
+  spinStyle.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(spinStyle);
+
+  // ── Arrancar
+  loadAllImages();
 
   // Navbar background on scroll
   const navEl = document.querySelector('nav');
